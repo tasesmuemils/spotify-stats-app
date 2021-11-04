@@ -138,6 +138,7 @@ const SongStyle = styled.li`
 
     .titles {
       padding-left: 30px;
+      padding-right: 30px;
       .track-name {
         h3 {
           font-size: 15px;
