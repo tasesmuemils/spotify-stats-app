@@ -6,6 +6,10 @@ import Song from "./Song";
 import { device } from "./mediaQueries";
 
 const TopSongsStyle = styled.div`
+  .error {
+    text-align: center;
+    padding: 10px;
+  }
   ul {
     display: grid;
     justify-content: center;
@@ -35,7 +39,7 @@ export default function TopSongs({ topArtists, songColor }) {
   return (
     <TopSongsStyle>
       {topArtists.length === 0 ? (
-        <h2>No songs available from this time range!</h2>
+        <h2 className="error">No songs available from this time range!</h2>
       ) : (
         <ul>
           {topArtists.map((track) => {
