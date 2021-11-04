@@ -1,49 +1,72 @@
 // Main packages
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { FaPlay, FaPause, FaRegMeh, FaSpotify } from "react-icons/fa";
+import { FaPlay, FaPause, FaRegMeh } from "react-icons/fa";
 import Fade from "react-reveal/Fade";
+import { ColorExtractor } from "react-color-extractor";
 // Components
 import { device } from "./mediaQueries";
 
 const SongStyle = styled.li`
+  position: relative;
   display: grid;
-  grid-template-columns: auto auto 1fr 1fr auto;
-  padding: 10px 20px;
-  background-color: #000000;
-  margin: 5px;
-  border-radius: 20px;
-  transition: all 0.5s;
-
-  &:hover {
-    background-color: #000000;
-  }
+  grid-template-columns: auto 600px;
+  padding: 10px 0px;
+  background-color: rgba(4, 25, 85, 0.5);
+  box-shadow: ${(props) =>
+    props.colorOnPlay
+      ? `0px 41px 93px rgba(0, 0, 0, 0.0403024),
+      0px 14.9657px 33.9465px rgba(0, 0, 0, 0.0576822),
+      0px 7.26556px 16.4804px rgba(0, 0, 0, 0.0723178),
+      0px 3.56171px 8.079px rgba(0, 0, 0, 0.0896976),
+      0px 1.40831px 3.19445px rgba(0, 0, 0, 0.13),
+      inset 70px 0px 50px -30px rgba(${props.songColor}, 0.8);`
+      : `0px 41px 93px rgba(0, 0, 0, 0.0403024),
+    0px 14.9657px 33.9465px rgba(0, 0, 0, 0.0576822),
+    0px 7.26556px 16.4804px rgba(0, 0, 0, 0.0723178),
+    0px 3.56171px 8.079px rgba(0, 0, 0, 0.0896976),
+    0px 1.40831px 3.19445px rgba(0, 0, 0, 0.13);`};
+  border-radius: 7px;
+  margin: 25px 0;
+  transition: box-shadow 0.3s;
 
   .img-wrapper {
     display: flex;
     align-items: center;
+    padding: 17px 13px;
+
     img {
-      width: 70px;
+      width: 100px;
       vertical-align: middle;
+      border-radius: 7px;
+      transition: 0.5s border;
     }
   }
 
+  li {
+    position: relative;
+  }
+
   .audio-preview {
-    display: grid;
-    align-items: center;
+    opacity: 1;
+    position: absolute;
+    top: 95px;
+    left: 102px;
 
     .icons {
-      background-color: #1db954;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 15px;
-      margin: 10px 20px 10px 10px;
-      vertical-align: middle;
-      transition: all 0.3s;
+      background-color: #dc07f3;
       color: #fff;
+      padding: 13px;
+      border-radius: 7px;
+      vertical-align: middle;
+      box-shadow: 0px 17px 45px rgba(217, 0, 225, 0.55),
+        0px 3.79717px 10.0513px rgba(217, 0, 225, 0.327859),
+        0px 1.13052px 2.99255px rgba(217, 0, 225, 0.222141);
+      transition: all 0.3s;
+      transform: translateY(0px);
 
       &:hover {
-        background-color: #14883d;
+        background-color: #ba0ace;
       }
     }
 
@@ -52,121 +75,111 @@ const SongStyle = styled.li`
     }
   }
 
-  .track-name {
+  .titles {
     display: flex;
-    align-items: center;
-    padding: 0 20px;
-  }
+    flex-direction: column;
+    padding: 20px 0;
+    margin: 0;
+    .track-name {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 0;
+      padding: 0 0 10px 0;
 
-  .artist-name {
-    display: flex;
-    align-items: center;
+      h3 {
+        margin: 0;
+      }
+    }
+
+    .artist-name {
+      margin: 0;
+      font-weight: normal;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+
+      p {
+        margin: 0;
+      }
+    }
   }
 
   .song-to-spotify {
     display: grid;
     align-items: center;
+    position: absolute;
+    right: 50px;
+    bottom: -20px;
     button {
       cursor: pointer;
-      font-size: 13px;
-      background-color: #1db954;
+      background-color: #dc07f3;
       color: #fff;
-      padding: 10px 15px;
+      padding: 15px;
       border: none;
-      border-radius: 20px;
+      border-radius: 7px;
       transition: all 0.3s;
+      font-weight: bold;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      transition: all 0.3s;
+      box-shadow: 0px 24px 32px rgba(220, 7, 243, 0.14),
+        0px 16px 24px rgba(220, 7, 243, 0.1),
+        0px 2px 6px rgba(220, 7, 243, 0.08), 0px 0px 1px rgba(0, 0, 0, 0.04);
 
       &:hover {
-        background-color: #14883d;
-      }
-
-      .spotify-icon {
-        font-size: 13px;
-        margin-right: 5px;
+        background-color: #ba0ace;
       }
     }
   }
 
   // Responsive style
-  @media ${device.laptopL} {
-    padding: 10px;
-    .track-name {
-      h3 {
-        font-size: 18px;
+
+  @media ${device.tablet} {
+    grid-template-columns: auto 400px;
+
+    .titles {
+      padding-left: 30px;
+      .track-name {
+        h3 {
+          font-size: 15px;
+        }
+      }
+
+      .artist-name {
+        font-size: 11px;
       }
     }
   }
 
-  @media ${device.laptop} {
-    /* padding: 0px; */
-    display: grid;
-    grid-template-columns: auto auto 1fr 1fr auto;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "audio image artist artist button"
-      "audio image track track button";
-
-    .audio-preview {
-      grid-area: audio;
-
-      .icons {
-        padding: 10px;
-        border-radius: 10px;
-        font-size: 15px;
-        margin: 10px 20px 10px 10px;
-        vertical-align: middle;
-      }
-    }
+  @media ${device.mobileL} {
+    grid-template-columns: auto 1fr;
 
     .img-wrapper {
-      grid-area: image;
+      padding: 20px 10px;
+
       img {
-        width: 50px;
+        width: 70px;
       }
     }
 
-    .track-name {
-      grid-area: track;
-      h3 {
-        font-size: 15px;
-      }
-    }
+    .audio-preview {
+      opacity: 1;
+      position: absolute;
+      top: 80px;
+      left: 60px;
 
-    .artist-name {
-      grid-area: artist;
-      padding: 0 20px;
-      font-size: 13px;
+      .icons {
+        padding: 11px;
+      }
     }
 
     .song-to-spotify {
-      grid-area: button;
-
+      right: 15px;
+      bottom: -10px;
       button {
-        font-size: 0px;
-        padding: 10px 10px;
-
-        .spotify-icon {
-          font-size: 15px;
-          margin-right: 0px;
-        }
-      }
-      span {
-        display: none;
-      }
-    }
-  }
-
-  @media ${device.tablet} {
-    .track-name {
-      h3 {
+        padding: 7px 10px;
         font-size: 13px;
+        letter-spacing: 0.04em;
       }
-    }
-
-    .artist-name {
-      grid-area: artist;
-      padding: 0 20px;
-      font-size: 11px;
     }
   }
 `;
@@ -180,13 +193,15 @@ export default function Song({
 }) {
   // State for play and pause preview
   const [songAudio] = useState(new Audio(trackData.preview_url));
-  // const [playSongPreview, setPlaySongPreview] = useState(false);
+
+  // Image color
+  const [colors, setColors] = useState(null);
 
   useEffect(() => {
     isPlaying ? songAudio.play() : songAudio.pause();
     // This is cleanup of the effect
     return () => songAudio.pause();
-  }, [isPlaying, songAudio]);
+  }, [isPlaying, songAudio, colors]);
 
   // When song ends, change state back to false
   useEffect(() => {
@@ -198,22 +213,20 @@ export default function Song({
 
   function togglePlay() {
     onPlay(!isPlaying);
-    // const newPlaySongPreview = !playSongPreview;
-    // setPlaySongPreview(newPlaySongPreview);
-
-    // newPlaySongPreview && onPlay(); // Trigger onPlay callback if newPlaySongPreview === true
-    // songAudio.pause();
   }
 
-  // console.log(trackData);
   return (
     <Fade bottom>
-      <SongStyle>
+      <SongStyle colorOnPlay={isPlaying} songColor={colors}>
         <div className="audio-preview">
           {trackData.preview_url == null ? (
             <FaRegMeh style={{ color: "#ffffff" }} className="icons" />
           ) : (
-            <div onClick={() => togglePlay()}>
+            <div
+              className="test"
+              onClick={() => {
+                togglePlay();
+              }}>
               {isPlaying ? (
                 <FaPause
                   style={{ color: "#ffffff" }}
@@ -226,16 +239,24 @@ export default function Song({
           )}
         </div>
         <div className="img-wrapper">
-          <img
-            src={trackData.album.images[0].url}
-            alt={`Track images ${trackData.name}`}
-          />
+          <ColorExtractor
+            rgb
+            getColors={(color) => {
+              setColors(`${color[0]}`);
+            }}>
+            <img
+              src={trackData.album.images[0].url}
+              alt={`Track images ${trackData.name}`}
+            />
+          </ColorExtractor>
         </div>
-        <div className="track-name">
-          <h3>{trackData.name}</h3>
-        </div>
-        <div className="artist-name">
-          <p>{trackData.album.artists[0].name}</p>
+        <div className="titles">
+          <div className="track-name">
+            <h3>{trackData.name}</h3>
+          </div>
+          <div className="artist-name">
+            <p>{trackData.album.artists[0].name}</p>
+          </div>
         </div>
         <div className="song-to-spotify">
           <a
@@ -243,7 +264,6 @@ export default function Song({
             target="_blank"
             rel="noreferrer noopener">
             <button>
-              <FaSpotify className="spotify-icon" />
               <span>Open in Spotify</span>
             </button>
           </a>

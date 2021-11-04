@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import queryString from "query-string";
 import axios from "axios";
+// import { motion } from "framer-motion";
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -54,6 +55,8 @@ const ModalStyle = styled.div`
       }
 
       input {
+        -webkit-appearance: none;
+        border-radius: 0;
         border: none;
         outline: none;
         border-bottom: 2px solid black;
@@ -73,23 +76,27 @@ const ModalStyle = styled.div`
         padding: 8px 34px;
         line-height: 18px;
         font-size: 13px;
+        letter-spacing: 0.08em;
+        font-weight: bold;
         letter-spacing: 1.76px;
         cursor: pointer;
       }
 
       .form-submit {
         cursor: pointer;
+        font-weight: bold;
         font-size: 13px;
-        background-color: #1db954;
+        background-color: #dc07f3;
         color: #fff;
         padding: 9px 15px;
         margin: 10px 20px;
         border: none;
-        border-radius: 20px;
+        border-radius: 7px;
+        letter-spacing: 0.08em;
         transition: all 0.3s;
 
         &:hover {
-          background-color: #14883d;
+          background-color: #ba0ace;
         }
       }
     }

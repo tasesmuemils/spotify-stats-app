@@ -8,21 +8,29 @@ const DropdownStyle = styled.div`
   align-items: center;
   margin: 0 20px 0px 20px;
   select {
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%238C98F2'><polygon points='0,0 100,0 50,50'/></svg>")
+      no-repeat;
+    background-size: 12px;
+    background-position: calc(100% + 0px) calc(100% - 10px);
+    background-repeat: no-repeat;
     outline: none;
     border: none;
-    border-radius: 25px;
-    font-size: 13px;
-    background-color: #1db954;
-    color: #fff;
+    font-size: 17px;
+    background-color: #3450a1;
+    color: #ffffff;
+    width: 120px;
     padding: 9px 15px;
+    margin: 0 10px;
   }
 
   @media ${device.laptop} {
     select {
-      font-size: 12px;
-      padding: 8px 14px;
+      /* font-size: 12px; */
+      background-position: calc(100% + 0px) calc(100% - 6px);
+      padding: 8px 20px;
     }
   }
 

@@ -11,7 +11,8 @@ const TopSongsStyle = styled.div`
     justify-content: center;
     grid-template-columns: repeat(1, 1fr);
     list-style: none;
-    margin: 0 100px;
+    padding: 0;
+    /* margin: 0 100px; */
   }
 
   // Responsive style
@@ -21,16 +22,15 @@ const TopSongsStyle = styled.div`
     }
   }
 
-  @media ${device.laptop} {
+  @media ${device.mobileL} {
     ul {
       margin: 0 20px;
     }
   }
 `;
 
-export default function TopSongs({ topArtists }) {
+export default function TopSongs({ topArtists, songColor }) {
   const [currentPlay, setCurrentPlay] = useState(null);
-  console.log("State from TOPSongs:", currentPlay);
 
   return (
     <TopSongsStyle>

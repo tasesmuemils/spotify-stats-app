@@ -6,17 +6,22 @@ import { device } from "./mediaQueries";
 
 const LoginButtonStyle = styled.button`
   cursor: pointer;
+  font-weight: bold;
   font-size: 16px;
-  background-color: #1db954;
+  background-color: #dc07f3;
   color: #fff;
   padding: 10px 100px;
   margin: 20px;
   border: none;
-  border-radius: 20px;
+  border-radius: 7px;
+  letter-spacing: 0.04em;
   transition: all 0.3s;
+  box-shadow: 0px 24px 32px rgba(220, 7, 243, 0.14),
+    0px 16px 24px rgba(220, 7, 243, 0.1), 0px 2px 6px rgba(220, 7, 243, 0.08),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
 
   &:hover {
-    background-color: #14883d;
+    background-color: #ba0ace;
   }
 
   // Responsive styling
